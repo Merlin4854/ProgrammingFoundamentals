@@ -1,0 +1,41 @@
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            Console.Write("Inserisci la tua età: ");
+            string input = Console.ReadLine();
+
+            int age = GetValidAge(input);
+
+            Console.WriteLine("Età inserita: " + age);
+        }
+        catch (InvalidAgeException ex)
+        {
+            Console.WriteLine("Errore: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore generico: " + ex.Message);
+        }
+    }
+
+    static int GetValidAge(string input)
+    {
+        if (!int.TryParse(input, out int age) || age < 0)
+        {
+            throw new InvalidAgeException("L'età inserita non è valida");
+        }
+
+        return age;
+    }
+}
+
+// Eccezione personalizzata per gestire errori di età non valide
+class InvalidAgeException : Exception
+{
+    public InvalidAgeException(string message) : base(message)
+    {
+    }
+}
